@@ -1,3 +1,50 @@
+# Getting Started
+
+Reference to:
+https://codingwithmanny.medium.com/how-to-dockerize-your-hardhat-solidity-contract-on-localhost-a45424369896
+https://medium.com/@pedrodc/implementing-a-blockchain-oracle-on-ethereum-cedc7e26b49e
+
+## Design A Simple Oracle Contract
+
+Please design a simple Oracle contract that tracks the current temperature, up to 2 decimal
+places.
+Requirements:
+
+- Provide a setter for the temperature
+- Provide a getter for the temperature
+  Please take the following into consideration:
+- How to ensure we are decentralized and without a single point of failure?
+- How do we determine who can submit the temperature?
+- How can we make sure no one is submitting wrong values?
+- How do we detect outliers?
+  For the language, you can use solidity, substrate or solana. If it is possible, please provide a
+  full docker dev environment.
+  To submit the exercise, you can upload to a public git repo or private git repo and add our
+  devs to the project.
+
+## Get started
+
+Local node
+```shell
+docker build . -t hhdocker # build
+docker run -it -d -p 8545:8545 --name myhd hhdocker # exposing port 8545
+docker logs myhd # view logs
+```
+
+Deploy contract
+```shell
+docker exec -it myhd /bin/sh -c "cd /usr/src/app; yarn deploy:local"
+```
+
+Test contract
+```shell
+docker exec -it myhd /bin/sh -c "cd /usr/src/app; yarn test:local"
+```
+
+TODO: Run off-chain oracle nodes subscribed to event
+
+TODO: Run script to request for current temperate up to 2 decimal
+
 # Advanced Sample Hardhat Project
 
 This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
