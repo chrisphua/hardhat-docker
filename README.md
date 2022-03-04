@@ -1,6 +1,7 @@
 # Getting Started
 
 Reference to:
+https://ethereum.org/en/developers/docs/oracles/#:~:text=An%20oracle%20is%20a%20bridge,out%20to%20the%20real%20world.
 https://codingwithmanny.medium.com/how-to-dockerize-your-hardhat-solidity-contract-on-localhost-a45424369896
 https://medium.com/@pedrodc/implementing-a-blockchain-oracle-on-ethereum-cedc7e26b49e
 
@@ -24,21 +25,20 @@ Requirements:
 
 ## Get started
 
-Local node
+#### Commands
+
 ```shell
-docker build . -t hhdocker # build
-docker run -it -d -p 8545:8545 --name myhd hhdocker # exposing port 8545
-docker logs myhd # view logs
+docker-composer up # build and run
 ```
 
 Deploy contract
 ```shell
-docker exec -it myhd /bin/sh -c "cd /usr/src/app; yarn deploy:local"
+docker exec -it hardhat-docker_hardhat_1 /bin/sh -c "cd /usr/src/app; yarn deploy:local"
 ```
 
 Test contract
 ```shell
-docker exec -it myhd /bin/sh -c "cd /usr/src/app; yarn test:local"
+docker exec -it hardhat-docker_hardhat_1 /bin/sh -c "cd /usr/src/app; yarn test:local"
 ```
 
 TODO: Run off-chain oracle nodes subscribed to event
