@@ -28,7 +28,7 @@ Requirements:
 #### Commands
 
 ```shell
-docker-composer up # build and run
+docker-compose up # build and run
 ```
 
 Deploy contract
