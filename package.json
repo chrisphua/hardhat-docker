@@ -7,8 +7,6 @@
     "test": "test"
   },
   "scripts": {
-    "start:local": "./node_modules/.bin/hardhat --config hardhat.config.local.ts --network hardhat node",
-    "deploy:local": "./node_modules/.bin/hardhat --config hardhat.config.local.ts --network hardhat run scripts/deploy.ts",
     "test:local": "./node_modules/.bin/hardhat --config hardhat.config.local.ts test"
   },
   "repository": {

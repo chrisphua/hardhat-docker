@@ -20,7 +20,7 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface OracleInterface extends utils.Interface {
   contractName: "Oracle";
   functions: {
-    "createRequest(string,string)": FunctionFragment;
+    "createRequest()": FunctionFragment;
     "currentId()": FunctionFragment;
     "minQuorum()": FunctionFragment;
     "requests(uint256)": FunctionFragment;
@@ -30,7 +30,7 @@ export interface OracleInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "createRequest",
-    values: [string, string]
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "currentId", values?: undefined): string;
   encodeFunctionData(functionFragment: "minQuorum", values?: undefined): string;
@@ -64,29 +64,21 @@ export interface OracleInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "NewRequest(uint256,string,string)": EventFragment;
-    "UpdatedRequest(uint256,string,string,string)": EventFragment;
+    "NewRequest(uint256)": EventFragment;
+    "UpdatedRequest(uint256,string)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "NewRequest"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UpdatedRequest"): EventFragment;
 }
 
-export type NewRequestEvent = TypedEvent<
-  [BigNumber, string, string],
-  { id: BigNumber; urlToQuery: string; attributeToFetch: string }
->;
+export type NewRequestEvent = TypedEvent<[BigNumber], { id: BigNumber }>;
 
 export type NewRequestEventFilter = TypedEventFilter<NewRequestEvent>;
 
 export type UpdatedRequestEvent = TypedEvent<
-  [BigNumber, string, string, string],
-  {
-    id: BigNumber;
-    urlToQuery: string;
-    attributeToFetch: string;
-    agreedValue: string;
-  }
+  [BigNumber, string],
+  { id: BigNumber; temperature: string }
 >;
 
 export type UpdatedRequestEventFilter = TypedEventFilter<UpdatedRequestEvent>;
@@ -120,8 +112,6 @@ export interface Oracle extends BaseContract {
 
   functions: {
     createRequest(
-      _urlToQuery: string,
-      _attributeToFetch: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -132,14 +122,7 @@ export interface Oracle extends BaseContract {
     requests(
       arg0: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, string, string, string] & {
-        id: BigNumber;
-        urlToQuery: string;
-        attributeToFetch: string;
-        agreedValue: string;
-      }
-    >;
+    ): Promise<[BigNumber, string] & { id: BigNumber; temperature: string }>;
 
     totalOracleCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -151,8 +134,6 @@ export interface Oracle extends BaseContract {
   };
 
   createRequest(
-    _urlToQuery: string,
-    _attributeToFetch: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -163,14 +144,7 @@ export interface Oracle extends BaseContract {
   requests(
     arg0: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, string, string, string] & {
-      id: BigNumber;
-      urlToQuery: string;
-      attributeToFetch: string;
-      agreedValue: string;
-    }
-  >;
+  ): Promise<[BigNumber, string] & { id: BigNumber; temperature: string }>;
 
   totalOracleCount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -181,11 +155,7 @@ export interface Oracle extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    createRequest(
-      _urlToQuery: string,
-      _attributeToFetch: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    createRequest(overrides?: CallOverrides): Promise<void>;
 
     currentId(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -194,14 +164,7 @@ export interface Oracle extends BaseContract {
     requests(
       arg0: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, string, string, string] & {
-        id: BigNumber;
-        urlToQuery: string;
-        attributeToFetch: string;
-        agreedValue: string;
-      }
-    >;
+    ): Promise<[BigNumber, string] & { id: BigNumber; temperature: string }>;
 
     totalOracleCount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -213,35 +176,18 @@ export interface Oracle extends BaseContract {
   };
 
   filters: {
-    "NewRequest(uint256,string,string)"(
-      id?: null,
-      urlToQuery?: null,
-      attributeToFetch?: null
-    ): NewRequestEventFilter;
-    NewRequest(
-      id?: null,
-      urlToQuery?: null,
-      attributeToFetch?: null
-    ): NewRequestEventFilter;
+    "NewRequest(uint256)"(id?: null): NewRequestEventFilter;
+    NewRequest(id?: null): NewRequestEventFilter;
 
-    "UpdatedRequest(uint256,string,string,string)"(
+    "UpdatedRequest(uint256,string)"(
       id?: null,
-      urlToQuery?: null,
-      attributeToFetch?: null,
-      agreedValue?: null
+      temperature?: null
     ): UpdatedRequestEventFilter;
-    UpdatedRequest(
-      id?: null,
-      urlToQuery?: null,
-      attributeToFetch?: null,
-      agreedValue?: null
-    ): UpdatedRequestEventFilter;
+    UpdatedRequest(id?: null, temperature?: null): UpdatedRequestEventFilter;
   };
 
   estimateGas: {
     createRequest(
-      _urlToQuery: string,
-      _attributeToFetch: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -262,8 +208,6 @@ export interface Oracle extends BaseContract {
 
   populateTransaction: {
     createRequest(
-      _urlToQuery: string,
-      _attributeToFetch: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
