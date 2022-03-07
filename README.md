@@ -1,9 +1,10 @@
 # Getting Started
 
 Reference to:
-https://ethereum.org/en/developers/docs/oracles/#:~:text=An%20oracle%20is%20a%20bridge,out%20to%20the%20real%20world.
-https://codingwithmanny.medium.com/how-to-dockerize-your-hardhat-solidity-contract-on-localhost-a45424369896
-https://medium.com/@pedrodc/implementing-a-blockchain-oracle-on-ethereum-cedc7e26b49e
+
+- https://ethereum.org/en/developers/docs/oracles/#:~:text=An%20oracle%20is%20a%20bridge,out%20to%20the%20real%20world
+- https://codingwithmanny.medium.com/how-to-dockerize-your-hardhat-solidity-contract-on-localhost-a45424369896
+- https://medium.com/@pedrodc/implementing-a-blockchain-oracle-on-ethereum-cedc7e26b49e
 
 ## Design A Simple Oracle Contract
 
@@ -22,9 +23,9 @@ Answer: More off-chain oracles ensure decentralized and without a single point o
 - How do we determine who can submit the temperature?
 Answer: Only participanting off-chain oracles can submit the temperature.
 - How can we make sure no one is submitting wrong values?
-Answer: Do a check in a loop, comparing submitted values and current value.
+Answer: To check the newly submitted temperature against an array of submitted temperatures in a specific request.
 - How do we detect outliers?
-Answer: We could have a margin error +/- of 0.03 Degree Celsius and eliminate temperature values that are out of the margin error. Thereafter, taking the average temperature of the submitted values within the margin error.
+Answer: There are few methods to detech outliers. One of the methods is to compute standard deviation (off-chain oracles should have accessed to other off-chain oracles data points) and finding out the outliers at off-chain oracles before submitting to the oracle smart contract. (https://towardsdatascience.com/5-ways-to-detect-outliers-that-every-data-scientist-should-know-python-code-70a54335a623). This will greatly reduce the transaction cost and avoid submitting wrong values.
   
 For the language, you can use solidity, substrate or solana. If it is possible, please provide a full docker dev environment.
 
