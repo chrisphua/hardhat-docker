@@ -35,10 +35,10 @@ To submit the exercise, you can upload to a public git repo or private git repo 
 
 #### Requirements
 
-Docker: version 20.10.12, build e91ed57
-Docker Compose: version v2.2.3
-Npm: 6.14.16
-Node: v14.19.0
+- Docker: version 20.10.12, build e91ed57
+- Docker Compose: version v2.2.3
+- Npm: 6.14.16
+- Node: v14.19.0
 
 #### Commands
 
