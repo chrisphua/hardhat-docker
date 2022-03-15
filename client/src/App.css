@@ -1,0 +1,35 @@
+.form {
+  margin: 20px;
+}
+
+.x-input-field {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+
+.x-input-field > label {
+  margin: 5px 0;
+}
+
+.x-input-field > input {
+  padding: 5px 4px;
+}
+
+.x-input-field > small {
+  font-size: x-small;
+  padding-top: 2px;
+}
+
+.x-button-wrapper {
+  padding: 20px 0;
+}
+
+button {
+  color: white;
+  background-color: black;
+  font-weight: bold;
+  font-size: medium;
+  padding: 8px 10px;
+  border-radius: 3px;
+}
