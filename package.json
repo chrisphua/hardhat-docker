@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test:local": "./node_modules/.bin/hardhat --config hardhat.config.local.ts test"
+    "test": "./node_modules/.bin/hardhat test",
+    "node": "./node_modules/.bin/hardhat node",
+    "deploy": "./node_modules/.bin/hardhat run --network localhost scripts/deploy.ts"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,7 @@
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.5.0",
     "@typechain/ethers-v5": "^9.0.0",
     "@typechain/hardhat": "^4.0.0",
     "@types/chai": "^4.3.0",

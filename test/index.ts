@@ -2,77 +2,64 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 // eslint-disable-next-line node/no-missing-import
-import { Oracle } from "../typechain-types";
+import { BasicToken } from "../typechain-types";
 
-describe("Oracle", function () {
-  const correctTemperature = "30.00";
+describe("Deployment", function () {
+  let contract: BasicToken;
 
-  const oracle1Temperature = "30.00";
-  const oracle2Temperature = "30.00";
-  const oracle3Temperature = "31.00"; // Outlier
-  const oracle4Temperature = "30.00";
-  const id = 0;
-
-  let contract: Oracle;
   // eslint-disable-next-line no-unused-vars
-  let contractOwnerAddress: SignerWithAddress;
-  let oracleAddress1: SignerWithAddress;
-  let oracleAddress2: SignerWithAddress;
-  let oracleAddress3: SignerWithAddress;
-  let oracleAddress4: SignerWithAddress;
+  let contractOwner: SignerWithAddress;
 
   before(async () => {
-    const [owner, account1, account2, account3, account4] = await ethers.getSigners();
-    contractOwnerAddress = owner;
-    oracleAddress1 = account1;
-    oracleAddress2 = account2;
-    oracleAddress3 = account3;
-    oracleAddress4 = account4;
-
-    const Contract = await ethers.getContractFactory("Oracle");
-    contract = await Contract.deploy();
+    const [owner] = await ethers.getSigners();
+    contractOwner = owner;
+    const Contract = await ethers.getContractFactory("BasicToken");
+    contract = await Contract.deploy("1000000000000000000000");
     await contract.deployed();
   });
 
-  it("Client sends a new API request", async () => {
-    expect(await contract.currentId()).to.equal(id);
-    await contract.createRequest();
-    expect(await contract.currentId()).to.equal(id + 1);
+  it("Should have initial supply of 1000000000000000000000", async () => {
+    expect(
+      (await contract.balanceOf(contractOwner.address)).toString()
+    ).to.equal("1000000000000000000000");
   });
 
-  it("Oracle 1 updates API request", async () => {
-    await contract.connect(oracleAddress1).updateRequest(id, oracle1Temperature);
+  it("Should have token name of Basic", async () => {
+    expect(await contract.name()).to.equal("Basic");
   });
 
-  it("Client should fail to retrieve API response", async () => {
-    const r = await contract.requests(id);
-    expect(r.temperature).to.not.equal(correctTemperature);
+  it("Should have token symbol of B", async () => {
+    expect(await contract.symbol()).to.equal("B");
+  });
+});
+
+describe("Token Transfer", function () {
+  let contract: BasicToken;
+
+  // eslint-disable-next-line no-unused-vars
+  let user1: SignerWithAddress;
+  let user2: SignerWithAddress;
+
+  beforeEach(async () => {
+    const [owner, account1, account2] = await ethers.getSigners();
+    user1 = account1;
+    user2 = account2;
+    const Contract = await ethers.getContractFactory("BasicToken");
+    contract = await Contract.deploy("1000000000000000000000");
+    await contract.deployed();
+
+    contract.transfer(user1.address, 1000);
+    contract.transfer(user2.address, 1000);
   });
 
-  it("Oracle 2 updates API request", async () => {
-    await contract.connect(oracleAddress2).updateRequest(id, oracle2Temperature);
+  it("Assigns initial balance", async () => {
+    expect(await contract.balanceOf(user1.address)).to.equal(1000);
+    expect(await contract.balanceOf(user2.address)).to.equal(1000);
   });
 
-  it("Client should fail to retrieve API response", async () => {
-    const r = await contract.requests(id);
-    expect(r.temperature).to.not.equal(correctTemperature);
-  });
-
-  it("Oracle 3 updates API request", async () => {
-    await contract.connect(oracleAddress3).updateRequest(id, oracle3Temperature);
-  });
-
-  it("Client should fail to retrieve API response", async () => {
-    const r = await contract.requests(id);
-    expect(r.temperature).to.not.equal(correctTemperature);
-  });
-
-  it("Oracle 4 updates API request", async () => {
-    await contract.connect(oracleAddress4).updateRequest(id, oracle4Temperature);
-  });
-
-  it("Client should retrieve API response", async () => {
-    const r = await contract.requests(id);
-    expect(r.temperature).to.equal(correctTemperature);
+  it("Transfer emits event", async () => {
+    await expect(contract.connect(user1).transfer(user2.address, 7))
+      .to.emit(contract, "Transfer")
+      .withArgs(user1.address, user2.address, 7);
   });
 });

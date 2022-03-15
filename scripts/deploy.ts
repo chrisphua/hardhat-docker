@@ -14,12 +14,12 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Oracle = await ethers.getContractFactory("Oracle");
-  const oracle = await Oracle.deploy();
+  const BasicToken = await ethers.getContractFactory("BasicToken");
+  const basicToken = await BasicToken.deploy("1000000000000000000000");
 
-  await oracle.deployed();
+  await basicToken.deployed();
 
-  console.log("Oracle deployed to:", oracle.address);
+  console.log("BasicToken deployed to:", basicToken.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

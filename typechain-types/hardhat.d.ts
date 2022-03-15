@@ -13,15 +13,42 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "Oracle",
+      name: "ERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Oracle__factory>;
+    ): Promise<Contracts.ERC20__factory>;
+    getContractFactory(
+      name: "IERC20Metadata",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20Metadata__factory>;
+    getContractFactory(
+      name: "IERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20__factory>;
+    getContractFactory(
+      name: "BasicToken",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BasicToken__factory>;
 
     getContractAt(
-      name: "Oracle",
+      name: "ERC20",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.Oracle>;
+    ): Promise<Contracts.ERC20>;
+    getContractAt(
+      name: "IERC20Metadata",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20Metadata>;
+    getContractAt(
+      name: "IERC20",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20>;
+    getContractAt(
+      name: "BasicToken",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BasicToken>;
 
     // default types
     getContractFactory(
