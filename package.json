@@ -9,7 +9,8 @@
   "scripts": {
     "test": "./node_modules/.bin/hardhat test",
     "node": "./node_modules/.bin/hardhat node",
-    "deploy": "./node_modules/.bin/hardhat run --network localhost scripts/deploy.ts"
+    "deploy": "./node_modules/.bin/hardhat run --network localhost scripts/deploy.ts",
+    "transfer": "./node_modules/.bin/hardhat run --network localhost scripts/transfer.ts"
   },
   "repository": {
     "type": "git",
