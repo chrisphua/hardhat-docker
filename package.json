@@ -10,6 +10,7 @@
     "test": "./node_modules/.bin/hardhat test",
     "node": "./node_modules/.bin/hardhat node",
     "deploy": "./node_modules/.bin/hardhat run --network localhost scripts/deploy.ts",
+    "server": "./node_modules/.bin/hardhat run --network localhost scripts/transferEvent.ts",
     "transfer": "./node_modules/.bin/hardhat run --network localhost scripts/transfer.ts"
   },
   "repository": {

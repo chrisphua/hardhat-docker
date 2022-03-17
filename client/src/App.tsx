@@ -168,9 +168,9 @@ function App() {
           <p>
             <u>Connected address: {address}</u>
           </p>
-          <p>
+          {/* <p>
             <u>Balance: {balance} ETH</u>
-          </p>
+          </p> */}
           <p>
             <u>
               Balance: {tokenBalance} {tokenSymbol}

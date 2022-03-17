@@ -22,8 +22,8 @@ async function main() {
   const basicToken = BasicToken.attach(config.erc20Address);
 
   for (let i = 0; i < signerAddresses.length; i++) {
-    basicToken.transfer(signerAddresses[i].address, 1000);
-    console.log("BasicToken transferred 1000 to:", signerAddresses[i].address);
+    basicToken.transfer(signerAddresses[i].address, "1000000000000000000");
+    console.log("BasicToken transferred 1000000000000000000 to:", signerAddresses[i].address);
   }
 }
 
